@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Surprise</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        button {
+            padding: 20px 40px;
+            font-size: 20px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <button onclick="playAudio()">Click For A Surprise</button>
+<script>
+    // 先创建一个音频对象，但不设置来源
+    var audio = new Audio();
+    
+    function playAudio() {
+        // 只有在第一次点击时，才设置音频源并播放
+        if (audio.src === "") {
+            // ！！！重要：确认这是您的JsDelivr链接 ！！！
+            audio.src = "https://cdn.jsdelivr.net/gh/ZhuoRain/nfc-jihua@main/lv020250903033839.mp3";
+            // 预先加载一点音频
+            audio.load();
+        }
+        
+        // 播放音频
+        var playPromise = audio.play();
+        
+        // 处理可能因为浏览器策略导致的播放失败
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                // 如果播放失败，显示提示（可选）
+                event.target.innerText = "Click again to play";
+                console.error("Playback failed:", error);
+            });
+        }
+        
+        // 改变按钮文字
+        event.target.innerText = "Playing...";
+    }
+              </script>
